@@ -120,7 +120,7 @@ pip install -r requirements.txt
 
 #### Files
 
-```Member4_work.ipynb``` – SHAP, counterfactuals, and Zero Trust modules
+```Member4_work_final.ipynb``` – SHAP, counterfactuals, and Zero Trust modules
 
 ## 📊 Project Highlights
 
