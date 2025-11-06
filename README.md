@@ -1,134 +1,166 @@
-Feature Engineering & Class Balancing with SMOTE
-📌 Project Overview
+# 🚀 Trace Transformer – Network Traffic Analysis & Intrusion Detection
+## 🧩 Overview
 
-This project demonstrates a complete data preprocessing and feature engineering pipeline applied to a dataset of ~500K+ records.
-The focus is on ensuring clean inputs, handling class imbalance, and preparing data for machine learning models.
-
-⚙️ Pipeline Steps & Rationale
-1. Data Loading
-
-Used: Pandas CSV loader (pd.read_csv)
-
-Why: The dataset was originally in CSV format; Pandas offers the most convenient functions for exploration and cleaning.
-
-Not Used: Polars / Parquet
-
-Although tested for performance, they were not adopted in the final version since the pipeline already ran efficiently with Pandas.
-
-2. Data Cleaning
-
-Handled missing values & infinite values
-
-Replaced NaN/Inf with column means to avoid training failures.
-
-Why: Machine learning algorithms cannot handle NaN values directly.
-
-Optimized datatypes
-
-Converted columns to smaller numeric types (e.g., int32, float32) to save memory.
-
-Why: Dataset had 500K+ rows; memory optimization improved efficiency.
-
-3. Feature Engineering
-
-Converted categorical variables into numeric form using Label Encoding.
-
-Why: ML models require numerical input.
-
-Ensured all features were numeric and compatible for downstream algorithms.
-
-4. Handling Class Imbalance
-
-Problem: The dataset was highly imbalanced → majority class overwhelmed the minority.
-
-Tried:
-
-SMOTE (Used ✅)
-
-Generates synthetic samples of the minority class by interpolating between neighbors.
-
-Balanced the dataset successfully and improved minority representation by ~300%.
-
-ADASYN (Not Used ❌)
-
-Adaptive version of SMOTE that focuses on harder-to-learn minority samples.
-
-Issue: Failed on this dataset → “No neighbors in majority class” error.
-
-Decision: Dropped in favor of SMOTE since it produced valid results.
-
-5. Visualization & Validation
-
-Before SMOTE: Severe class imbalance (majority class dominated).
-
-After SMOTE: Nearly balanced dataset (green bars).
-
-Added both bar charts and class count summaries to clearly show the improvement.
-
-📊 Results
-
-Original dataset: ~90% majority class vs ~10% minority class.
-
-After SMOTE: ~50-50 balance between classes.
-
-Minority class representation increased by 300%.
-
-Enabled fairer training of machine learning models by reducing bias.
-
-🚀 Tech Stack
-
-Python 3.11
-
-Pandas, NumPy → Data manipulation
-
-Matplotlib → Visualization
-
-Scikit-learn → Preprocessing & encoding
-
-Imbalanced-learn → SMOTE & ADASYN
-
-📂 Repository Structure
-├── Member1_FeatureEngineering.ipynb   # Main notebook with pipeline
-├── README.md                          # Project documentation
-└── requirements.txt                   # Dependencies
-
-✅ How to Run
-
-Clone the repository
-
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+Trace Transformer is an advanced **network traffic analysis and intrusion detection system** leveraging the **FT-Transformer architecture** for high-dimensional tabular and trace data. The project integrates powerful preprocessing, deep learning, optimization, and explainable AI components — built collaboratively by four team members — to ensure accurate, interpretable, and secure network monitoring.
 
 
-Install dependencies
+### 👥 Team Contributions
+## 🧮 Member 1 – Data Engineering & Feature Processing
 
+**Role:** Data Preprocessing and Feature Engineering Specialist
+**Focus:** Preparing clean, structured, and scalable datasets for downstream machine learning.
+
+#### Key Contributions
+
+- Cleaned and preprocessed large-scale network traffic datasets.
+
+- Engineered and transformed 80+ traffic-related features.
+
+- Implemented missing-value imputation, normalization, and outlier handling.
+
+- Conducted exploratory data analysis (EDA) to identify network anomalies.
+
+- Designed a modular data-cleaning pipeline for reproducibility.
+
+#### Tech Stack
+Python, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Jupyter Notebook
+
+#### Setup
+ ``` pip install pandas numpy scikit-learn matplotlib seaborn jupyter ```
+
+ ***Run: Member1_FeatureEngineering.ipynb after placing CSV datasets in the working directory.***
+
+## 🤖 Member 2 – Deep Learning Architecture & Ensembling
+
+**Role:** Deep Learning Architect
+**Focus:** FT-Transformer implementation and ensemble stacking for robust classification.
+
+#### Key Contributions
+
+- Designed and implemented an FT-Transformer for trace/log data using PyTorch.
+
+- Built data loaders and custom dataset pipelines for sequence modeling.
+
+- Developed ensemble and stacking frameworks combining multiple deep models.
+
+- Performed extensive hyperparameter tuning and experiment tracking.
+
+- Created reusable training, validation, and inference modules.
+
+#### Tech Stack
+PyTorch, Scikit-learn, NumPy, Pandas, Matplotlib, Jupyter
+
+#### Setup
+```
+git clone https://github.com/aadyanair/Trace_Transformer.git
+cd Trace_Transformer
+python3 -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
+```
 
-Run the notebook
+***Run: Member2_work(1).ipynb to train the FT-Transformer and stacking ensemble.***
 
-jupyter notebook Member1_FeatureEngineering.ipynb
 
-📌 Applications
+## ⚙️ Member 3 – Model Optimization & Evaluation
 
-This pipeline can be reused in:
+**Role:** Optimization & Evaluation Specialist
+**Focus:** Hyperparameter tuning, performance evaluation, and model validation.
 
-Fraud Detection – oversampling rare fraudulent transactions.
+#### Key Contributions
 
-Healthcare – predicting rare diseases.
+- Used Optuna for automated hyperparameter optimization (learning rate, dropout, batch size).
 
-Predictive Maintenance – detecting rare failure events.
+- Implemented early stopping and learning rate scheduling to prevent overfitting.
 
-Any Imbalanced Dataset Problem where fairness is critical.
+- Achieved validation accuracy ≈ 92.1% and weighted F1 ≈ 0.91.
 
-✨ Key Learnings & Choices
+- Built **AdvancedModelEvaluator** for detailed metrics and visualizations (Confusion Matrix, ROC, PR Curves).
 
-SMOTE was chosen because it successfully balanced the dataset without errors.
+- Automated model saving and configuration management with JSON and PyTorch checkpoints.
 
-ADASYN was rejected because the dataset’s structure made it unsuitable (neighbors issue).
+#### Files
 
-Polars/Parquet were skipped as Pandas already offered sufficient performance.
+```Member3_work.ipynb ```– main training and evaluation notebook
 
-Data cleaning (NaN/Inf replacement) was essential since SMOTE cannot handle missing values.
+#### Key Results
 
-🔥 This project highlights how thoughtful preprocessing and the right choice of resampling technique can drastically improve the fairness and reliability of ML models.
+- Validation Accuracy: 92.1%
+
+- Weighted F1: 0.91+
+
+- Stable training by epoch 36
+
+
+## 🔐 Member 4 – Explainability & Security Integration
+
+**Role:** Explainable AI & Security Specialist
+**Focus:** Interpretability of model predictions and integration with Zero Trust security.
+
+#### Key Contributions
+
+- Applied SHAP and Integrated Gradients for feature-level interpretability.
+
+- Generated counterfactual explanations to understand decision boundaries.
+
+- Implemented a Zero Trust Security layer with token-based authentication and confidence-based prediction flags.
+
+- Built an Explainable AI wrapper for per-request interpretability.
+
+- Ensured reliable and transparent model deployment.
+
+#### Key Insights
+
+- SHAP and Integrated Gradients identified consistent top features.
+
+- Counterfactuals showed stable and logical decision boundaries.
+
+- Zero Trust pipeline effectively filtered low-confidence predictions.
+
+#### Files
+
+```Member4_work.ipynb``` – SHAP, counterfactuals, and Zero Trust modules
+
+## 📊 Project Highlights
+
+| Component          | Description                                         | Tools Used           |
+| ------------------ | --------------------------------------------------- | -------------------- |
+| Data Preprocessing | Cleaning, feature scaling, missing value imputation | Pandas, NumPy        |
+| Deep Learning      | FT-Transformer, model stacking                      | PyTorch              |
+| Optimization       | Optuna-based hyperparameter tuning                  | Optuna, Scikit-learn |
+| Evaluation         | Metrics, confusion matrix, ROC, PR curves           | Matplotlib           |
+| Explainability     | SHAP, Integrated Gradients, Counterfactuals         | SHAP, Captum         |
+| Security           | Zero Trust authentication and logging               | Python, PyTorch      |
+
+
+# 🧠 Results Summary
+
+**Validation Accuracy:** ≈ 92.1%
+
+**Weighted F1 Score:** ≈ 0.91
+
+**Early Stopping Epoch:** 36
+
+**Architecture:** FT-Transformer (256 dim, 7 layers, 16 heads)
+
+**Ensemble Accuracy:** 92.52% across 7 classes
+
+## 🔮 Future Scope
+
+- Integrate SHAP-based feature importance in real-time dashboards.
+
+- Combine FT-Transformer with TabNet or XGBoost for hybrid ensembles.
+
+- Extend Zero Trust to federated learning environments.
+
+- Deploy using FastAPI or Docker for scalable production inference.
+
+
+
+## 💡 Summary
+
+Trace Transformer unites data preprocessing, deep learning, optimization, and explainable AI to deliver a **secure and interpretable network intrusion detection system**.
+Each member’s contribution forms an essential layer of the pipeline — from raw data to explainable predictions — making it robust, scalable, and production-ready.
+
+
